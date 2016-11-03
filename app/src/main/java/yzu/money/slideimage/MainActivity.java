@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,13 +13,14 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout ll;
     private TextView tv;
     private ViewPager vp;
     private ArrayList<ImageView> ivs = new ArrayList<>();
-    int [] ids=[R.drawable.s1, R.drawable.s2, R.drawable.s3];
+    int [] ids={R.drawable.s1, R.drawable.s2, R.drawable.s3};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +38,39 @@ public class MainActivity extends AppCompatActivity {
             iv.setBackgroundResource(ids[i]);
             ivs.add(iv);
         }
-        vp.setAdapter(new ViewPagerAdapter());
+        vp.setAdapter(new ViewPagerAdapter(ivs));
         ll.addView(vp);
     }
     //-----------------------
     public class ViewPagerAdapter extends PagerAdapter{
+        private List<ImageView> list;
 
+        public ViewPagerAdapter(List<ImageView> ivs) {//Constructor
+            this.list = ivs;//list改成ivs
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+            //super.destroyItem(container, position, object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View view=list.get(position);
+            container.addView(view);
+            return view;
+            //return super.instantiateItem(container, position);
+        }
 
         @Override
         public int getCount() {
-            return 0;
+            return list.size();
         }
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return false;
+            return view==object;
         }
     }
 }
