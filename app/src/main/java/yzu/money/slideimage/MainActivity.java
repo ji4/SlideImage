@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv;
     private ViewPager vp;
     private ArrayList<ImageView> ivs = new ArrayList<>();
+    int [] ids=[R.drawable.s1, R.drawable.s2, R.drawable.s3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
         tv.setTextSize(40);
         ll.addView(tv);
         vp=new ViewPager(this);
+        for(int i=0; i<ids.length; i++)
+        {
+            ImageView iv=new ImageView(this);
+            iv.setBackgroundResource(ids[i]);
+            ivs.add(iv);
+        }
         vp.setAdapter(new ViewPagerAdapter());
         ll.addView(vp);
     }
