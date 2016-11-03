@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager vp;
     private ArrayList<ImageView> ivs = new ArrayList<>();
     int [] ids={R.drawable.s1, R.drawable.s2, R.drawable.s3};
+    String[] str = {"soeasy", "very easy", "super easy"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,23 @@ public class MainActivity extends AppCompatActivity {
             ivs.add(iv);
         }
         vp.setAdapter(new ViewPagerAdapter(ivs));
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                tv.setText(str[position]);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         ll.addView(vp);
     }
     //-----------------------
