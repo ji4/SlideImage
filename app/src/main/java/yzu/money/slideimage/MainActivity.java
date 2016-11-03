@@ -11,11 +11,13 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout ll;
     private TextView tv;
     private ViewPager vp;
+    private ArrayList<ImageView> ivs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
