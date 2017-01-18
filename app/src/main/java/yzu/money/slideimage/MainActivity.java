@@ -1,5 +1,6 @@
 package yzu.money.slideimage;
 
+import android.content.res.Configuration;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -17,6 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout ll;
+    private LinearLayout ll2;
     private TextView tv;
     private ViewPager vp;
     private ArrayList<ImageView> ivs = new ArrayList<>();
@@ -29,9 +33,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ll= (LinearLayout) findViewById(R.id.activity_main);
+        //ll2= new LinearLayout(this);
         tv=new TextView(this);
         tv.setTextSize(40);
         ll.addView(tv);
+
+        ll2 = new LinearLayout(this);
+        //ll2.setOrientation(LinearLayout.HORIZONTAL);
+        ll2.setOrientation(LinearLayout.VERTICAL);
+        //setContentView(ll);
+
         vp=new ViewPager(this);
         for(int i=0; i<ids.length; i++)
         {
@@ -57,8 +68,32 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        ll.addView(vp);
+        ll2.addView(vp);
+        ll.addView(ll2);
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        switch (newConfig.orientation)
+        {
+            case Configuration.ORIENTATION_LANDSCAPE:
+                Toast.makeText(MainActivity.this, "test1",Toast.LENGTH_SHORT).show();
+
+                ll.setOrientation(LinearLayout.HORIZONTAL);
+                ll.removeView(ll2);
+                ll.addView(ll2);
+                break;
+            case Configuration.ORIENTATION_PORTRAIT:
+                Toast.makeText(MainActivity.this, "test2",Toast.LENGTH_SHORT).show();
+                ll.setOrientation(LinearLayout.VERTICAL);
+                ll.removeView(ll2);
+                ll.addView(ll2);
+
+                break;
+        }
+    }
+
     //-----------------------
     public class ViewPagerAdapter extends PagerAdapter{
         private List<ImageView> list;
